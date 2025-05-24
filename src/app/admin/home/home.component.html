@@ -1,0 +1,356 @@
+<button *ngIf="isSidebarOpen" (click)="toggleSidebar()"
+    class="sm:hidden fixed top-4 right-4 z-50 text-gray-500 hover:text-gray-900 bg-white rounded-full p-2 shadow-md">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+</button>
+
+<div *ngIf="isSidebarOpen" (click)="toggleSidebar()" class="sm:hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-30">
+</div>
+
+<aside id="sidebar-multi-level-sidebar"
+    [ngClass]="{'-translate-x-full': !isSidebarOpen, 'translate-x-0': isSidebarOpen, 'w-64': !isSidebarCollapsed, 'w-16': isSidebarCollapsed}"
+    class="fixed top-0 left-0 z-40 h-screen transition-all duration-300 sm:translate-x-0" aria-label="Sidebar">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50">
+        <a class="text-lg font-bold text-purple-600 flex items-center justify-center mb-2" routerLink="/admin/home">
+            <span *ngIf="!isSidebarCollapsed">Đồng hồ Phương Nam</span>
+            <img *ngIf="isSidebarCollapsed" src="logo_watch.png" alt="Logo" class="w-8 h-8">
+        </a>
+
+        <ul class="space-y-2 font-medium">
+            <li>
+                <a routerLink="/admin/home"
+                    class="flex items-center p-2 text-purple-600 bg-gray-200 duration-75 rounded-lg group hover:bg-gray-200 group hover:text-purple-600">
+                    <svg class="w-5 h-5 text-purple-600 transition duration-75 group-hover:text-purple-600"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                        <path
+                            d="M10.707 1.293a1 1 0 0 0-1.414 0l-8 8A1 1 0 0 0 2 10h1v7a1 1 0 0 0 1 1h5v-5h2v5h5a1 1 0 0 0 1-1v-7h1a1 1 0 0 0 .707-1.707l-8-8Z" />
+                    </svg>
+                    <span class="ms-3" [ngClass]="{'hidden': isSidebarCollapsed}">Tổng quan</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/admin/brands"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+                    <svg class="shrink-0 w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path
+                            d="M4 3a1 1 0 0 0-1 1v2a3 3 0 0 0 .879 2.121l.086.085a2.992 2.992 0 0 0 2.12.879h7.83a3 3 0 0 0 2.121-.879l.086-.085A3 3 0 0 0 17 6V4a1 1 0 0 0-1-1H4ZM3 13a2 2 0 0 1 2-2h2v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-5h2a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4Z" />
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Thương
+                        hiệu</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/admin/categories"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+                    <svg class="shrink-0 w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path
+                            d="M4 3a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4Zm0 8a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H4Zm8-8a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-3Zm-1 9a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-3Z" />
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Danh
+                        mục</span>
+                </a>
+            </li>
+            <li>
+                <button type="button"
+                    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-200"
+                    (click)="toggleDropdown()">
+                    <svg class="shrink-0 w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
+                        <path
+                            d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+                    </svg>
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap group-hover:text-purple-600"
+                        [ngClass]="{'hidden': isSidebarCollapsed}">Sản phẩm</span>
+                    <svg class="w-3 h-3 group-hover:text-purple-600"
+                        [ngClass]="{'hidden': isSidebarCollapsed, 'rotate-180': isDropdownOpen}"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 4 4 4-4" />
+                    </svg>
+                </button>
+
+                <ul [ngClass]="{'hidden': !isDropdownOpen || isSidebarCollapsed}" class="py-2 space-y-2">
+                    <li>
+                        <a routerLink="/admin/products" routerLinkActive="text-purple-600 font-semibold"
+                            class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">
+                            Danh sách
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/admin/discounts" routerLinkActive="text-gray-900 font-semibold"
+                            class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">
+                            Mã giảm giá
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/admin/wishlist" routerLinkActive="text-gray-900 font-semibold"
+                            class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">
+                            Yêu thích
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/admin/reviews" routerLinkActive="text-gray-900 font-semibold"
+                            class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">
+                            Đánh giá
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <button type="button"
+                    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-200"
+                    (click)="toggleDropdown1()">
+                    <svg class="w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                        <path
+                            d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
+                    </svg>
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap group-hover:text-purple-600"
+                        [ngClass]="{'hidden': isSidebarCollapsed}">Hóa đơn</span>
+                    <svg class="w-3 h-3 group-hover:text-purple-600"
+                        [ngClass]="{'hidden': isSidebarCollapsed, 'rotate-180': isDropdownOpen1}"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 4 4 4-4" />
+                    </svg>
+                </button>
+                <ul [ngClass]="{'hidden': !isDropdownOpen1 || isSidebarCollapsed}" class="py-2 space-y-2">
+                    <li>
+                        <a routerLink="/admin/orders"
+                            class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">Bán
+                            hàng</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a routerLink="/admin/payments"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+                    <svg class="w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                        <path
+                            d="M4 2a1 1 0 0 0-1 1v19l3-2 3 2 3-2 3 2 3-2 3 2V3a1 1 0 0 0-1-1H4Zm4 5h8a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2Zm0 4h8a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2Zm0 4h5a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2Z" />
+                    </svg>
+                    <span class="ms-3" [ngClass]="{'hidden': isSidebarCollapsed}">Thanh toán</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/admin/statistics"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+                    <svg class="w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                        <path
+                            d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+                        <path
+                            d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Thống
+                        kê</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/admin/users"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+                    <svg class="shrink-0 w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path
+                            d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Khách
+                        hàng</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/admin/accounts"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+                    <svg class="shrink-0 w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M10 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-7 14a7 7 0 1 1 14 0H3Z" />
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Tài
+                        khoản</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+<div [ngClass]="{'sm:ml-64': !isSidebarCollapsed && !isMobile, 'sm:ml-16': isSidebarCollapsed && !isMobile, 'ml-0': isMobile && !isSidebarOpen}"
+    class="p-4 transition-all duration-300">
+    <div class="flex items-center justify-between">
+        <button (click)="toggleSidebar()"
+            class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+            <span class="sr-only">Open sidebar</span>
+            <svg class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path clip-rule="evenodd" fill-rule="evenodd"
+                    d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                </path>
+            </svg>
+        </button>
+
+        <button (click)="toggleSidebarCollapse()" class="hidden sm:flex text-gray-600 hover:text-purple-600">
+            <svg class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path clip-rule="evenodd" fill-rule="evenodd"
+                    d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                </path>
+            </svg>
+        </button>
+
+        <div class="flex-1 mx-4 relative">
+            <button type="button" class="absolute inset-y-0 left-0 flex items-center pl-3 z-10">
+                <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
+                    </path>
+                </svg>
+            </button>
+            <input type="text" placeholder="Tìm kiếm thông tin..."
+                class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300 relative z-0" />
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <button (click)="toggleNotification()" class="relative text-gray-500 hover:text-gray-900" title="Thông báo">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 2a6 6 0 00-6 6v2.586l-.707.707A1 1 0 004 13h12a1 1 0 00.707-1.707L16 10.586V8a6 6 0 00-6-6zM8 17a2 2 0 104 0H8z" />
+                </svg>
+                <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+
+            <div class="relative">
+                <img (click)="toggleAvatarMenu()" src="logo_watch.png" alt="Avatar"
+                    class="w-8 h-8 rounded-full object-cover border border-gray-300 cursor-pointer">
+
+                <div *ngIf="isAvatarMenuOpen"
+                    class="absolute top-10 right-0 w-48 bg-white rounded-lg shadow-lg z-50 border border-gray-200">
+                    <ul class="py-1">
+                        <li>
+                            <button (click)="goToAccountInfo()"
+                                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-600">
+                                Thông tin tài khoản
+                            </button>
+                        </li>
+                        <li>
+                            <button (click)="logout()"
+                                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-600">
+                                Đăng xuất
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isNotificationOpen"
+        class="absolute top-14 right-16 w-72 bg-white rounded-lg shadow-lg z-50 p-4 border border-gray-200">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">Thông báo</h3>
+        <ul class="divide-y divide-gray-200">
+            <li class="text-sm text-gray-700 py-2">Đơn hàng #123 đã được giao thành công.</li>
+            <li class="text-sm text-gray-700 py-2">Sản phẩm "Đồng hồ XYZ" sắp hết hàng.</li>
+            <li class="text-sm text-gray-700 py-2">Khách hàng mới đăng ký: abcexample.com.</li>
+        </ul>
+        <button (click)="toggleNotification()" class="mt-2 text-sm text-purple-600 hover:underline">
+            Đóng
+        </button>
+    </div>
+
+    <hr class="my-4 border-gray-300" />
+    <div class="mt-4 flex items-center justify-between">
+        <div class="flex items-center text-xl font-semibold text-gray-800">
+            Tổng quan
+        </div>
+    </div>
+    <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
+                    </path>
+                </svg>
+            </div>
+            <div>
+                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    Khách hàng
+                </p>
+                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                    10
+                </p>
+            </div>
+        </div>
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <div>
+                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    Tổng doanh thu ngày
+                </p>
+                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                    238.000.000 <sup>đ</sup>
+                </p>
+            </div>
+        </div>
+        <!-- Card -->
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z">
+                    </path>
+                </svg>
+            </div>
+            <div>
+                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    Tổng sản phẩm
+                </p>
+                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                    20
+                </p>
+            </div>
+        </div>
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <div class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <div>
+                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    Bình luận, phản hổi
+                </p>
+                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                    5
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Thống kê -->
+    <div class="mt-6 overflow-x-auto shadow-lg rounded-xl">
+        <div class="flex items-center gap-4 mb-4">
+            <label class="text-sm font-medium">Thống kê theo:</label>
+            <select [(ngModel)]="groupBy" (change)="onGroupByChange()" class="border rounded-md px-3 py-1">
+                <option value="month">Tháng</option>
+                <option value="day">Ngày</option>
+                <option value="customer">Khách hàng</option> <!-- Thêm lựa chọn mới -->
+            </select>
+        </div>
+
+        <div class="mt-6 overflow-x-auto shadow-lg rounded-xl bg-white p-4">
+            <canvas baseChart [data]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                [type]="'bar'"></canvas>
+        </div>
+    </div>
+</div>

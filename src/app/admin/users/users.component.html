@@ -1,0 +1,689 @@
+<button *ngIf="isSidebarOpen" (click)="toggleSidebar()"
+  class="sm:hidden fixed top-4 right-4 z-50 text-gray-500 hover:text-gray-900 bg-white rounded-full p-2 shadow-md">
+  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</button>
+
+<div *ngIf="isSidebarOpen" (click)="toggleSidebar()" class="sm:hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-30">
+</div>
+
+<aside id="sidebar-multi-level-sidebar"
+  [ngClass]="{'-translate-x-full': !isSidebarOpen, 'translate-x-0': isSidebarOpen, 'w-64': !isSidebarCollapsed, 'w-16': isSidebarCollapsed}"
+  class="fixed top-0 left-0 z-40 h-screen transition-all duration-300 sm:translate-x-0" aria-label="Sidebar">
+  <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50">
+    <a class="text-lg font-bold text-purple-600 flex items-center justify-center mb-2" routerLink="/admin/home">
+      <span *ngIf="!isSidebarCollapsed">Đồng hồ Phương Nam</span>
+      <img *ngIf="isSidebarCollapsed" src="logo_watch.png" alt="Logo" class="w-8 h-8">
+    </a>
+
+    <ul class="space-y-2 font-medium">
+      <li>
+        <a routerLink="/admin/home"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+          <svg class="w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+            <path
+              d="M10.707 1.293a1 1 0 0 0-1.414 0l-8 8A1 1 0 0 0 2 10h1v7a1 1 0 0 0 1 1h5v-5h2v5h5a1 1 0 0 0 1-1v-7h1a1 1 0 0 0 .707-1.707l-8-8Z" />
+          </svg>
+          <span class="ms-3" [ngClass]="{'hidden': isSidebarCollapsed}">Tổng quan</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/brands"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+          <svg class="shrink-0 w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+            <path
+              d="M4 3a1 1 0 0 0-1 1v2a3 3 0 0 0 .879 2.121l.086.085a2.992 2.992 0 0 0 2.12.879h7.83a3 3 0 0 0 2.121-.879l.086-.085A3 3 0 0 0 17 6V4a1 1 0 0 0-1-1H4ZM3 13a2 2 0 0 1 2-2h2v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-5h2a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4Z" />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Thương
+            hiệu</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/categories"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+          <svg class="shrink-0 w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+            <path
+              d="M4 3a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4Zm0 8a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H4Zm8-8a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-3Zm-1 9a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-3Z" />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Danh
+            mục</span>
+        </a>
+      </li>
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-200"
+          (click)="toggleDropdown()">
+          <svg class="shrink-0 w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
+            <path
+              d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+          </svg>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap group-hover:text-purple-600"
+            [ngClass]="{'hidden': isSidebarCollapsed}">Sản phẩm</span>
+          <svg class="w-3 h-3 group-hover:text-purple-600"
+            [ngClass]="{'hidden': isSidebarCollapsed, 'rotate-180': isDropdownOpen}" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+
+        <ul [ngClass]="{'hidden': !isDropdownOpen || isSidebarCollapsed}" class="py-2 space-y-2">
+          <li>
+            <a routerLink="/admin/products" routerLinkActive="text-purple-600 font-semibold"
+              class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">
+              Danh sách
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/discounts" routerLinkActive="text-gray-900 font-semibold"
+              class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">
+              Mã giảm giá
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/wishlist" routerLinkActive="text-gray-900 font-semibold"
+              class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">
+              Yêu thích
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/reviews" routerLinkActive="text-gray-900 font-semibold"
+              class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">
+              Đánh giá
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-200"
+          (click)="toggleDropdown1()">
+          <svg class="w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+            <path
+              d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
+          </svg>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap group-hover:text-purple-600"
+            [ngClass]="{'hidden': isSidebarCollapsed}">Hóa đơn</span>
+          <svg class="w-3 h-3 group-hover:text-purple-600"
+            [ngClass]="{'hidden': isSidebarCollapsed, 'rotate-180': isDropdownOpen1}" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul [ngClass]="{'hidden': !isDropdownOpen1 || isSidebarCollapsed}" class="py-2 space-y-2">
+          <li>
+            <a routerLink="/admin/orders"
+              class="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-200 hover:text-purple-600">Bán
+              hàng</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a routerLink="/admin/payments"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+          <svg class="w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+            <path
+              d="M4 2a1 1 0 0 0-1 1v19l3-2 3 2 3-2 3 2 3-2 3 2V3a1 1 0 0 0-1-1H4Zm4 5h8a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2Zm0 4h8a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2Zm0 4h5a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2Z" />
+          </svg>
+          <span class="ms-3" [ngClass]="{'hidden': isSidebarCollapsed}">Thanh toán</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/statistics"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+          <svg class="w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+            <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+            <path
+              d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Thống
+            kê</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/users"
+          class="flex items-center p-2 text-purple-600 bg-gray-200 duration-75 rounded-lg group hover:bg-gray-200 group hover:text-purple-600">
+          <svg class="shrink-0 w-5 h-5 text-purple-600 transition duration-75 group-hover:text-purple-600"
+            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+            <path
+              d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Khách
+            hàng</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/accounts"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-200 group hover:text-purple-600">
+          <svg class="shrink-0 w-5 h-5 text-gray-600 transition duration-75 group-hover:text-purple-600"
+            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+            <path d="M10 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-7 14a7 7 0 1 1 14 0H3Z" />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap" [ngClass]="{'hidden': isSidebarCollapsed}">Tài
+            khoản</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<div
+  [ngClass]="{'sm:ml-64': !isSidebarCollapsed && !isMobile, 'sm:ml-16': isSidebarCollapsed && !isMobile, 'ml-0': isMobile && !isSidebarOpen}"
+  class="p-4 transition-all duration-300">
+  <div class="flex items-center justify-between">
+    <button (click)="toggleSidebar()"
+      class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+      <span class="sr-only">Open sidebar</span>
+      <svg class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" fill-rule="evenodd"
+          d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+        </path>
+      </svg>
+    </button>
+
+    <button (click)="toggleSidebarCollapse()" class="hidden sm:flex text-gray-600 hover:text-purple-600">
+      <svg class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" fill-rule="evenodd"
+          d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+        </path>
+      </svg>
+    </button>
+
+    <div class="flex-1 mx-4 relative">
+      <button type="button" *ngIf="searchContent" (click)="clearSearch()"
+        class="absolute inset-y-0 left-0 flex items-center pl-3 z-10">
+        <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
+          </path>
+        </svg>
+      </button>
+      <input type="text" placeholder="Tìm kiếm thông tin..." [(ngModel)]="searchContent" (input)="searchUsers()"
+        class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300 relative z-0" />
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <button (click)="toggleNotification()" class="relative text-gray-500 hover:text-gray-900" title="Thông báo">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+          <path
+            d="M10 2a6 6 0 00-6 6v2.586l-.707.707A1 1 0 004 13h12a1 1 0 00.707-1.707L16 10.586V8a6 6 0 00-6-6zM8 17a2 2 0 104 0H8z" />
+        </svg>
+        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+      </button>
+
+      <div class="relative">
+        <img (click)="toggleAvatarMenu()" src="logo_watch.png" alt="Avatar"
+          class="w-8 h-8 rounded-full object-cover border border-gray-300 cursor-pointer">
+
+        <div *ngIf="isAvatarMenuOpen"
+          class="absolute top-10 right-0 w-48 bg-white rounded-lg shadow-lg z-50 border border-gray-200">
+          <ul class="py-1">
+            <li>
+              <button (click)="goToAccountInfo()"
+                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-600">
+                Thông tin tài khoản
+              </button>
+            </li>
+            <li>
+              <button (click)="logout()"
+                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-600">
+                Đăng xuất
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isNotificationOpen"
+    class="absolute top-14 right-16 w-72 bg-white rounded-lg shadow-lg z-50 p-4 border border-gray-200">
+    <h3 class="text-sm font-semibold text-gray-900 mb-2">Thông báo</h3>
+    <ul class="divide-y divide-gray-200">
+      <li class="text-sm text-gray-700 py-2">Đơn hàng #123 đã được giao thành công.</li>
+      <li class="text-sm text-gray-700 py-2">Sản phẩm "Đồng hồ XYZ" sắp hết hàng.</li>
+      <li class="text-sm text-gray-700 py-2">Khách hàng mới đăng ký: abcexample.com.</li>
+    </ul>
+    <button (click)="toggleNotification()" class="mt-2 text-sm text-purple-600 hover:underline">
+      Đóng
+    </button>
+  </div>
+
+  <hr class="my-4 border-gray-300" />
+  <div class="mt-4 flex items-center justify-between">
+    <div class="flex items-center text-xl font-semibold text-gray-800">
+      Danh sách người dùng
+    </div>
+    <button (click)="showCreateUser()"
+      class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors duration-200">
+      + Thêm người dùng
+    </button>
+  </div>
+
+  <!-- Bảng danh sách sản phẩm -->
+  <div class="mt-6 overflow-x-auto shadow-lg rounded-xl">
+    <table class="min-w-full bg-white border border-gray-200 rounded-xl text-sm">
+      <thead>
+        <tr class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-xs uppercase tracking-wider">
+          <th class="w-[5%] py-3 px-4 border-b border-r border-gray-200 text-center rounded-tl-xl">STT</th>
+          <th class="w-[10%] py-3 px-4 border-b border-r border-gray-200 text-center">Ảnh</th>
+          <th class="w-[15%] py-3 px-4 border-b border-r border-gray-200 text-center">Tên</th>
+          <th class="w-[15%] py-3 px-4 border-b border-r border-gray-200 text-center">Email</th>
+          <th class="w-[10%] py-3 px-4 border-b border-r border-gray-200 text-center">SĐT</th>
+          <th class="w-[10%] py-3 px-4 border-b border-r border-gray-200 text-center">Giới tính</th>
+          <th class="w-[10%] py-3 px-4 border-b border-r border-gray-200 text-center">Trạng thái</th>
+          <th class="w-[25%] py-3 px-4 border-b text-center rounded-tr-xl">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers; let i = index"
+          class="transition-all duration-300 hover:bg-gradient-to-r hover:from-purple-50 hover:to-indigo-50 hover:shadow-md">
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-center">
+            {{ (currentPage - 1) * itemsPerPage + i + 1 }}
+          </td>
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-center">
+            <img [src]="user.imgUrl" alt="{{ user.name }}"
+              class="inline-block w-10 h-10 object-cover rounded-full transform hover:scale-110 transition-transform duration-200" />
+          </td>
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-center text-gray-700 font-medium">
+            {{ user.name }}
+          </td>
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-center text-gray-700">
+            {{ user.email }}
+          </td>
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-center text-gray-700">
+            {{ user.phone }}
+          </td>
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-center text-gray-700">
+            {{ user.gender }}
+          </td>
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-center">
+            <span [ngClass]="{
+          'text-green-600 font-semibold': user.isActive,
+          'text-red-500 font-semibold': !user.isActive
+        }">
+              {{ user.isActive ? 'Đang hoạt động' : 'Ngừng hoạt động' }}
+            </span>
+          </td>
+          <td class="py-3 px-4 border-b text-center">
+            <div class="flex justify-center space-x-2">
+              <button (click)="viewDetails(user.id)"
+                class="text-purple-500 hover:text-purple-700 transform hover:scale-125 transition-all duration-200"
+                title="Xem chi tiết">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-5.065 7-9.542 7s-8.268-2.943-9.542-7z" />
+                </svg>
+              </button>
+              <button (click)="editUser(user.id)"
+                class="text-blue-500 hover:text-blue-700 transform hover:scale-125 transition-all duration-200"
+                title="Sửa">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h2m-2 6h2m-2 6h2" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15.232 5.232a2.5 2.5 0 013.536 3.536l-10 10H6v-2.768l10-10z" />
+                </svg>
+              </button>
+              <label class="inline-flex items-center cursor-pointer group">
+                <input type="checkbox" class="sr-only peer" [checked]="user.isActive"
+                  (change)="toggleUserStatus(user)" />
+
+                <!-- Nền công tắc -->
+                <div
+                  class="w-12 h-6 bg-gray-300 rounded-full peer-checked:bg-green-500 relative transition-colors duration-300 ease-in-out">
+                  <!-- Nút trượt -->
+                  <div
+                    class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ease-in-out peer-checked:translate-x-6">
+                  </div>
+                </div>
+              </label>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="paginatedUsers.length === 0">
+          <td colspan="8" class="py-4 text-center text-gray-500 border-b">
+            Không có dữ liệu
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Phân trang -->
+    <div class="mt-4 mb-4 flex justify-between items-center px-4" *ngIf="users.length > 0">
+      <div class="text-sm text-gray-600">
+        Hiển thị {{ showingStart }} - {{ showingEnd }} của {{ totalItems }}
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <button (click)="goToFirstPage()" [disabled]="currentPage === 1"
+          class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50">
+          &lt;&lt;
+        </button>
+        <button (click)="previousPage()" [disabled]="currentPage === 1"
+          class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50">
+          &lt;
+        </button>
+        <button *ngFor="let page of pageNumbers" (click)="goToPage(page)"
+          [ngClass]="{'bg-purple-600 text-white': currentPage === page && typeof page === 'number', 'bg-gray-200 text-gray-600': currentPage !== page || typeof page === 'string'}"
+          class="px-3 py-1 rounded hover:bg-purple-500 hover:text-white transition-colors duration-200"
+          [disabled]="typeof page === 'string'">
+          {{ page }}
+        </button>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+          class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50">
+          &gt;
+        </button>
+        <button (click)="goToLastPage()" [disabled]="currentPage === totalPages"
+          class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50">
+          &gt;&gt;
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Chi tiết -->
+    <div *ngIf="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-0">
+      <div class="fixed inset-0 bg-gray-600 bg-opacity-50" (click)="closeModal()"></div>
+      <div
+        class="relative bg-white rounded-lg shadow-lg p-6 w-[1000px] h-[650px] border border-gray-200 z-50 overflow-y-auto">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Thông tin người dùng</h2>
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Ảnh</label>
+            <img [src]="selectedUser?.imgUrl" alt="{{ selectedUser?.name }}"
+              class="w-24 h-24 object-cover rounded-full mt-2 mx-auto">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">ID</label>
+            <input type="text" readonly [value]="selectedUser?.id"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Tên</label>
+            <input type="text" readonly [value]="selectedUser?.name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="text" readonly [value]="selectedUser?.email"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">SĐT</label>
+            <input type="text" readonly [value]="selectedUser?.phone"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Giới tính</label>
+            <input type="text" readonly [value]="selectedUser?.gender"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Vai trò</label>
+            <input type="text" readonly [value]="selectedUser?.role"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 capitalize">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Trạng thái</label>
+            <input type="text" [value]="selectedUser?.isActive ? 'Đang hoạt động' : 'Ngừng hoạt động'" readonly
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Ngày tạo</label>
+            <input type="text" [value]="selectedUser?.createAt | date:'dd/MM/yyyy HH:mm'" readonly
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Cập nhật gần nhất</label>
+            <input type="text"
+              [value]="selectedUser?.updateAt ? (selectedUser.updateAt | date:'dd/MM/yyyy HH:mm') : 'Chưa cập nhật'"
+              readonly class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+          </div>
+
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700">Địa chỉ</label>
+            <textarea readonly [value]="selectedUser?.address"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="mt-6 flex justify-end">
+          <button (click)="closeModal()"
+            class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors duration-200">
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thêm -->
+    <div *ngIf="isModalCreate" class="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-0">
+      <div class="fixed inset-0 bg-gray-600 bg-opacity-50" (click)="closeModal()"></div>
+      <div
+        class="relative bg-white rounded-lg shadow-lg p-6 w-[1000px] h-[650px] border border-gray-200 z-50 overflow-y-auto">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Thêm người dùng mới</h2>
+
+        <div class="grid grid-cols-2 gap-6">
+          <!-- Ảnh -->
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Chọn ảnh</label>
+            <div class="flex items-center space-x-6">
+              <img [src]="newUser.imgPreview || ''" alt="Ảnh người dùng"
+                class="w-24 h-24 object-cover rounded-full border border-gray-300">
+              <div class="flex-1">
+                <input type="file" (change)="onFileSelectedCreate($event)"
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                  accept="image/*">
+                <div *ngIf="newUser.fileName" class="mt-2 text-sm text-gray-600">
+                  File đã chọn: {{ newUser.fileName }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Các trường thông tin -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Tên</label>
+            <input type="text" [(ngModel)]="newUser.name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" [(ngModel)]="newUser.email"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+            <input type="text" [(ngModel)]="newUser.phone"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Giới tính</label>
+            <input type="text" [(ngModel)]="newUser.gender"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+
+          <!-- Mật khẩu -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+            <input type="password" [(ngModel)]="newUser.password"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="Ít nhất 8 ký tự">
+          </div>
+
+          <!-- Vai trò (chỉ Super Admin mới thấy) -->
+          <div *ngIf="currentUser?.id === 1">
+            <label class="block text-sm font-medium text-gray-700">Vai trò</label>
+            <select [(ngModel)]="newUser.role" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+              <option value="USER">Người dùng</option>
+              <option value="ADMIN">Quản trị viên</option>
+            </select>
+          </div>
+
+          <!-- Địa chỉ -->
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700">Địa chỉ</label>
+            <textarea [(ngModel)]="newUser.address"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" rows="3"></textarea>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="mt-6 flex justify-end space-x-4">
+          <button (click)="createUser()"
+            class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors duration-200">
+            Thêm mới
+          </button>
+          <button (click)="closeModal()"
+            class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors duration-200">
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sửa -->
+    <div *ngIf="isModalUpdate" class="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-0">
+      <div class="fixed inset-0 bg-gray-600 bg-opacity-50" (click)="closeModal()"></div>
+      <div
+        class="relative bg-white rounded-lg shadow-lg p-6 w-[1000px] h-[620px] border border-gray-200 z-50 overflow-y-auto">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Cập nhật người dùng</h2>
+        <div class="grid grid-cols-2 gap-6">
+
+          <!-- ID -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">ID</label>
+            <input type="text" [value]="selectedUser.id" readonly
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+          </div>
+
+          <!-- Ảnh (1 mình 1 hàng) -->
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Chọn ảnh</label>
+            <div class="flex items-center space-x-6">
+              <!-- Preview ảnh -->
+              <img [src]="selectedUser?.imgPreview || selectedUser?.imgUrl || ''" alt="Ảnh người dùng"
+                class="w-24 h-24 object-cover rounded-full border border-gray-300">
+
+              <!-- Input và file info -->
+              <div class="flex-1">
+                <input type="text" [(ngModel)]="selectedUser.imgUrl" placeholder="URL ảnh" readonly
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
+                <div class="mt-2 flex items-center">
+                  <input type="file" (change)="onFileSelectedUpdate($event)" class="hidden" id="imageUpload"
+                    accept="image/*" />
+                  <label for="imageUpload"
+                    class="cursor-pointer px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300">
+                    Chọn ảnh mới
+                  </label>
+                  <div *ngIf="selectedUser.fileName" class="ml-4 text-sm text-gray-600">
+                    File đã chọn: {{ selectedUser?.fileName }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tên -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Tên</label>
+            <input type="text" [(ngModel)]="selectedUser.name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" [(ngModel)]="selectedUser.email"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+
+          <!-- SĐT -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+            <input type="text" [(ngModel)]="selectedUser.phone"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+
+          <!-- Giới tính -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Giới tính</label>
+            <input type="text" [(ngModel)]="selectedUser.gender"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+          </div>
+
+          <!-- Giới tính -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+            <input type="password" [(ngModel)]="selectedUser.password"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+              placeholder="Chỉ nhập nếu muốn đổi mật khẩu (ít nhất 8 ký tự)">
+
+          </div>
+
+          <!-- Role (chỉ hiện nếu là super admin) -->
+          <div *ngIf="currentUser?.id === 1">
+            <label class="block text-sm font-medium text-gray-700">Vai trò</label>
+            <select [(ngModel)]="selectedUser.role"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+              <option value="USER">Người dùng</option>
+              <option value="ADMIN">Quản trị viên</option>
+            </select>
+          </div>
+
+          <!-- Địa chỉ -->
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-700">Địa chỉ</label>
+            <textarea [(ngModel)]="selectedUser.address"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" rows="3"></textarea>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="mt-6 flex justify-end space-x-4">
+          <button (click)="updateUser()"
+            class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors duration-200">
+            Cập nhật
+          </button>
+          <button (click)="closeModal()"
+            class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors duration-200">
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thông báo thành công -->
+    <div *ngIf="isSuccessMessageVisible"
+      class="fixed bottom-4 right-4 z-50 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 animate-fade-in">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+      <span>{{ successMessage }}</span>
+    </div>
+  </div>
+</div>

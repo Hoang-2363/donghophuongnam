@@ -1,0 +1,83 @@
+<div
+  class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500/50 via-purple-500/50 to-pink-500/50 px-4 md:px-0">
+  <div class="w-full max-w-6xl flex flex-col md:flex-row rounded-lg shadow-lg overflow-hidden">
+
+    <!-- Banner bên trái -->
+    <div class="w-full md:w-2/5 h-40 md:h-auto bg-cover bg-center" style="background-image: url('sign_in.png')">
+    </div>
+
+    <!-- Form bên phải -->
+    <div class="w-full md:w-3/5 p-6 bg-purple-100">
+      <div class="text-center">
+        <img src="logo_watch.png" alt="Logo" height="120" width="120" class="mx-auto" />
+        <h2 class="text-3xl font-bold text-purple-600 mb-2 mt-3">Đăng nhập</h2>
+        <p
+          class="text-base font-semibold bg-gradient-to-r from-pink-500/80 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
+          Chào mừng đến với Đồng hồ Phương Nam
+        </p>
+      </div>
+
+      <form class="mt-6" (ngSubmit)="onSubmit()">
+        <!-- Contact -->
+        <div class="mb-4">
+          <label for="contact" class="block text-base font-bold text-black-600 mb-1">
+            Nhập địa chỉ Email hoặc số điện thoại
+          </label>
+          <input id="contact" [(ngModel)]="contact" name="contact" type="text" required
+            class="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Nhập địa chỉ Email hoặc số điện thoại" />
+        </div>
+
+        <!-- Password -->
+        <div class="mb-4">
+          <label for="password" class="block text-base font-bold text-black-600 mb-1">Mật khẩu</label>
+          <input id="password" [(ngModel)]="password" name="password" [type]="showPassword ? 'text' : 'password'"
+            required placeholder="Nhập mật khẩu"
+            class="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+          <div class="flex justify-end items-center mt-2">
+            <input id="show-password" type="checkbox" [(ngModel)]="showPassword" name="showPassword"
+              class="h-4 w-4 text-blue-600 border-gray-300 rounded" />
+            <label for="show-password" class="ml-2 text-sm font-semibold">Hiển thị mật khẩu</label>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="mt-4 text-red-600 text-center min-h-[3rem] transition-all duration-300 ease-in-out">
+          <span *ngIf="errorMessage" class="opacity-100">{{ errorMessage }}</span>
+        </div>
+
+        <!-- Remember + Quên mật khẩu -->
+        <div class="mb-4 flex items-center justify-between">
+          <div class="flex items-center">
+            <input id="remember-password" type="checkbox" [(ngModel)]="rememberAccount" name="rememberAccount"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+            <label for="remember-password" class="ml-2 text-sm text-black-900">Nhớ tài khoản</label>
+          </div>
+          <a routerLink="/forgot-password" class="text-sm font-semibold text-blue-700 hover:text-blue-400">
+            Quên mật khẩu?
+          </a>
+        </div>
+
+        <!-- Submit -->
+        <div class="mb-4">
+          <button type="submit" [disabled]="!contact || !password"
+            class="w-full py-2 px-4 text-xl font-bold text-white bg-gradient-to-r from-blue-500/80 to-rose-500/80 rounded-md shadow hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed">
+            Đăng nhập
+          </button>
+        </div>
+      </form>
+
+      <!-- Footer -->
+      <div class="text-center">
+        <span class="text-sm text-gray-700 font-semibold">Bạn chưa có tài khoản?</span>
+        <a routerLink="/register" class="text-base font-semibold text-purple-700 hover:underline">
+          Đăng ký
+        </a>
+        &nbsp;&nbsp;-&nbsp;&nbsp;
+        <a routerLink="/" class="text-base font-semibold text-blue-700 hover:underline">
+          Về trang chủ
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

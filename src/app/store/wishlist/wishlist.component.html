@@ -1,0 +1,414 @@
+<!-- Modal Quảng cáo -->
+<div *ngIf="isAdModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-75">
+  <div class="relative w-full h-full flex items-center justify-center">
+    <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1920&q=80"
+      class="object-cover" alt="Ad Banner">
+    <div class="absolute inset-0 flex flex-col justify-center items-center text-white bg-black bg-opacity-30">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">Chào mừng đến với WatchStore!</h1>
+      <p class="text-lg md:text-xl mb-6">Khám phá bộ sưu tập đồng hồ đẳng cấp</p>
+      <button class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700" (click)="closeAdModal()">Khám phá
+        ngay</button>
+    </div>
+    <button class="absolute top-6 right-6 text-white text-4xl" (click)="closeAdModal()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
+
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <!-- Top Bar -->
+  <div class="bg-gray-800 text-white py-2">
+    <div class="container mx-auto flex justify-between items-center px-4">
+      <div>
+        Miễn phí vận chuyển cho đơn hàng tiêu chuẩn trên 1.000.000 <sup>đ</sup>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a [routerLink]="['/contact']" class="hover:text-gray-300">Trợ giúp & Câu hỏi thường gặp</a>
+        <a [routerLink]="['/']" class="hover:text-gray-300">Tài khoản</a>
+        <a [routerLink]="['/']">
+          <img
+            src="https://media.istockphoto.com/id/961747352/vi/vec-to/c%E1%BB%9D-hoa-k%E1%BB%B3-minh-h%E1%BB%8Da-vector.jpg?s=612x612&w=0&k=20&c=r4KOoQnof8ssQs1XZH_9mZnaX7vtwid7GWIJu2wbhZg="
+            alt="English" class="w-6 h-4" />
+        </a>
+        <a [routerLink]="['/']">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1200px-Flag_of_Vietnam.svg.png"
+            alt="Việt Nam" class="w-6 h-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-8 py-4 flex justify-between items-center">
+    <div class="text-2xl font-bold">
+      <a [routerLink]="['/']"><img src="logo.png" alt="Logo" /></a>
+    </div>
+
+    <nav #menu [ngClass]="{
+        'flex': true,
+        'flex-col': isMenuOpen,
+        'hidden': !isMenuOpen,
+        'md:flex': true,
+        'md:flex-row': true,
+        'md:space-x-6': true,
+        'absolute': isMenuOpen,
+        'md:static': true,
+        'top-16': isMenuOpen,
+        'left-0': isMenuOpen,
+        'w-full': isMenuOpen,
+        'md:w-auto': true,
+        'bg-purple-200': isMenuOpen,
+        'md:bg-transparent': true
+      }">
+      <a [routerLink]="['/']" class="text-lg font-bold text-blue-600 px-4 py-2 md:px-2">Trang chủ</a>
+      <a [routerLink]="['/products']" class="text-gray-700 text-lg font-bold hover:text-blue-600 px-4 py-2 md:px-2">Sản
+        phẩm</a>
+      <a [routerLink]="['/blogs']" class="text-gray-700 text-lg font-bold hover:text-blue-600 px-4 py-2 md:px-2">Tin
+        tức</a>
+      <a [routerLink]="['/about']" class="text-gray-700 text-lg font-bold hover:text-blue-600 px-4 py-2 md:px-2">Giới
+        thiệu</a>
+      <a [routerLink]="['/contact']" class="text-gray-700 text-lg font-bold hover:text-blue-600 px-4 py-2 md:px-2">Liên
+        hệ</a>
+      <a *ngIf="isLoggedIn" [routerLink]="['/orders-tracking']"
+        class="text-gray-700 text-lg font-bold hover:text-blue-600 px-4 py-2 md:px-2">Hóa đơn</a>
+    </nav>
+
+    <!-- Icons -->
+    <div class="flex items-center space-x-4">
+      <a class="text-gray-700 text-lg hover:text-blue-600 px-1 cursor-pointer" (click)="toggleSearch($event)">
+        <i class="fas fa-search"></i>
+      </a>
+      <a class="relative text-gray-700 text-lg hover:text-blue-600 px-1 cursor-pointer" (click)="toggleCart($event)">
+        <i class="fas fa-shopping-cart"></i>
+        <span
+          class="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center ">{{
+          cartItemCount }}</span>
+      </a>
+      <a class="relative text-gray-700 text-lg hover:text-blue-600 px-1 cursor-pointer"
+        (click)="toggleWishlist($event)">
+        <i class="fas fa-heart"></i>
+        <span
+          class="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+          {{ wishlistItemCount }}
+        </span>
+      </a>
+      <a class="text-gray-700 text-lg hover:text-blue-600 mr-6 cursor-pointer" (click)="toggleMenu()">
+        <i class="fas fa-user"></i>
+      </a>
+
+      <div *ngIf="isMenuOpen" class="menu">
+        <!-- Nếu chưa đăng nhập -->
+        <a *ngIf="!isLoggedIn" [routerLink]="['/register']"
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-300 cursor-pointer">Đăng
+          ký</a>
+        <a *ngIf="!isLoggedIn" [routerLink]="['/login']"
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-300 cursor-pointer">Đăng
+          nhập</a>
+        <a *ngIf="isLoggedIn" [routerLink]="['/account']"
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-300 cursor-pointer">Thông tin tài khoản</a>
+        <a *ngIf="isLoggedIn" (click)="logout()"
+          class="block px-4 py-2 text-gray-700 hover:bg-gray-300 cursor-pointer">Đăng xuất</a>
+      </div>
+    </div>
+
+    <!-- Hamburger Icon -->
+    <button #hamburger class="md:hidden text-gray-700 text-2xl cursor-pointer" (click)="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+  <!-- home.component.html -->
+  <div *ngIf="isSearchOpen" class="container mx-auto px-4 py-2">
+    <div class="relative flex items-center">
+      <input type="text" placeholder="Nhập thông tin tìm kiếm..." [(ngModel)]="searchQuery" (keydown.enter)="onSearch()"
+        class="w-full p-2 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" />
+      <button (click)="onSearch()" class="absolute right-2 focus:outline-none mr-2">
+        <svg class="h-6 w-6 text-gray-500 hover:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Cart Sidebar -->
+<div *ngIf="isCartOpen" class="fixed inset-0 z-50 flex justify-end">
+  <div class="absolute inset-0 bg-black bg-opacity-50" (click)="toggleCart($event)">
+  </div>
+  <div
+    class="relative w-full max-w-md bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out px-4 py-4"
+    [ngClass]="{'translate-x-0': isCartOpen, 'translate-x-full': !isCartOpen}">
+    <div class="p-4">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Giỏ hàng</h2>
+        <button class="text-gray-600 hover:text-gray-800" (click)="toggleCart($event)">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div *ngIf="cartItemCount === 0" class="text-center text-gray-500">
+        Giỏ hàng trống
+      </div>
+      <div *ngFor="let item of cartItems" class="flex items-center mb-4 border-b pb-2">
+        <img *ngIf="item.product.imageUrls && item.product.imageUrls.length > 0" [src]="item.product.imageUrls[0]"
+          alt="{{ item.product.name }}" class="product-image">
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold">{{ item.product.name }}</h3>
+          <p class="text-gray-600">{{ item.product.priceSelling
+            | number }} <sup>đ</sup></p>
+          <p class="text-gray-500">Số lượng: {{ item.quantity }}</p>
+        </div>
+      </div>
+      <a [routerLink]="['/carts']" *ngIf="cartItemCount > 0"
+        class="block w-full bg-blue-600 text-white py-2 rounded-md text-center hover:bg-blue-700">
+        Xem chi tiết
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Wishlist Sidebar -->
+<div *ngIf="isWishlistOpen" class="fixed inset-0 z-50 flex justify-end">
+  <div class="absolute inset-0 bg-black bg-opacity-50" (click)="toggleWishlist($event)"></div>
+  <div
+    class="relative w-full max-w-md bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out px-4 py-4"
+    [ngClass]="{'translate-x-0': isWishlistOpen, 'translate-x-full': !isWishlistOpen}">
+    <div class="p-4">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Danh sách yêu thích</h2>
+        <button class="text-gray-600 hover:text-gray-800" (click)="toggleWishlist($event)">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div *ngIf="wishlistItemCount === 0" class="text-center text-gray-500">
+        Không có sản phẩm yêu thích nào
+      </div>
+      <div *ngFor="let item of wishlistItems" class="flex items-center mb-4 border-b pb-2">
+        <img *ngIf="item.product.imageUrls && item.product.imageUrls.length > 0" [src]="item.product.imageUrls[0]"
+          alt="{{ item.product.name }}" class="product-image">
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold">{{ item.product.name }}</h3>
+          <p class="text-gray-600">
+            {{ item.product.priceSelling | number }} <sup>đ</sup>
+          </p>
+        </div>
+      </div>
+      <a [routerLink]="['/wishlist']" *ngIf="wishlistItemCount > 0"
+        class="block w-full bg-blue-600 text-white py-2 rounded-md text-center hover:bg-blue-700">
+        Xem chi tiết
+      </a>
+    </div>
+  </div>
+</div>
+
+<nav class="bg-white text-black py-2 ml-8">
+  <div class="container mx-auto text-sm">
+    <ol class="flex justify-start space-x-2">
+      <a [routerLink]="['/']" class="text-blue-500 hover:text-blue-700 font-bold underline">
+        Trang chủ
+      </a>
+      <li>&gt;</li>
+      <li>&nbsp;Sản phẩm yêu thích</li>
+    </ol>
+  </div>
+</nav>
+
+<!-- Banner Trang -->
+<section class="bg-gray-800 text-white w-full">
+  <div class="text-center relative w-full">
+    <div class="carousel-item flex-shrink-0 w-full">
+      <!-- Ảnh nền với lớp overlay -->
+      <div class="relative w-full">
+        <img src="bg-02.png" class="w-full h-56 object-cover" alt="Banner Image">
+        <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Lớp nền mờ -->
+      </div>
+      <div class="absolute inset-0 flex flex-col justify-center items-center text-white">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Sản phẩm yêu thích</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Danh sách sản phẩm -->
+<section class="bg-gray-50 py-12 px-4">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-8">Danh sách sản phẩm yêu thích</h2>
+
+    <div *ngIf="wishlistItems.length === 0" class="text-center">
+      <p class="text-lg text-blue-600 font-semibold mb-4">Bạn chưa có sản phẩm yêu thích nào.</p>
+      <a [routerLink]="['/products']"
+        class="inline-block px-6 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition">
+        Khám phá sản phẩm
+      </a>
+    </div>
+
+    <div *ngIf="wishlistItems.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let item of wishlistItems" class="bg-white rounded-2xl shadow-lg p-4 transition hover:shadow-xl">
+        <img [src]="item.product.imageUrls[0]" alt="{{ item.product.name }}"
+          class="w-full h-52 object-cover rounded-xl mb-4 border border-gray-200 shadow-sm" />
+
+        <h3 class="text-lg font-semibold text-gray-800 mb-1 truncate">{{ item.product.name }}</h3>
+        <p class="text-red-600 text-xl font-bold mb-2">
+          {{ item.product.priceSelling | number }}<sup>đ</sup>
+        </p>
+
+        <div class="flex justify-between items-center">
+          <a [routerLink]="['/product', item.product.id]" class="text-blue-500 hover:underline font-medium">
+            Xem chi tiết
+          </a>
+          <button (click)="removeFromWishlist(item.product.id!)"
+            class="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition">
+            <i class="fa fa-trash text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="wishlistItems.length > 0" class="text-center mt-8">
+      <button class="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition">
+        Lưu thông tin
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-xl font-bold mb-4">Đồng hồ Phương Nam</h3>
+        <p>Cửa hàng đồng hồ uy tín, chất lượng hàng đầu.</p>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold mb-4">Liên kết nhanh</h3>
+        <ul class="space-y-2">
+          <li><a [routerLink]="['/']" class="hover:text-blue-400">Trang chủ</a></li>
+          <li><a [routerLink]="['/products']" class="hover:text-blue-400">Sản phẩm</a></li>
+          <li><a [routerLink]="['/blogs']" class="hover:text-blue-400">Tin tức</a></li>
+          <li><a [routerLink]="['/about']" class="hover:text-blue-400">Giới thiệu</a></li>
+          <li><a [routerLink]="['/contact']" class="hover:text-blue-400">Liên hệ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold mb-4">Liên hệ</h3>
+        <p>Email: {{email}}</p>
+        <p>Hotline: 0349135499 - 0359782629</p>
+        <p>Địa chỉ: 31 P. Đinh Tiên Hoàng, Hàng Trống, Hoàn Kiếm, Hà Nội, Việt Nam</p>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold mb-4">Theo dõi chúng tôi</h3>
+        <div class="flex space-x-4">
+          <a [routerLink]="['/']" class="text-2xl hover:text-blue-400"><i class="fab fa-facebook"></i></a>
+          <a [routerLink]="['/']" class="text-2xl hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+          <a [routerLink]="['/']" class="text-2xl hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8 text-center">
+      <p>&copy; 2025 Đồng hồ Phương Nam. Mọi quyền được bảo lưu.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Nút liên hệ -->
+<div class="fixed bottom-20 right-6 z-50">
+  <!-- Nút chính -->
+  <button (click)="toggleContactMenu()"
+    class="bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition duration-300 flex items-center justify-center animate-pulse-slow hover:transform hover:-translate-y-1 focus:outline-none">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 animate-wiggle" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l4-4h3.414" />
+    </svg>
+  </button>
+
+  <!-- Menu liên hệ khi mở -->
+  <div *ngIf="isContactMenuOpen"
+    class="absolute bottom-16 right-0 bg-white rounded-lg shadow-xl p-2 w-48 flex flex-col gap-2 transition-all duration-300 animate-slide-up">
+    <!-- Gọi điện -->
+    <a href="tel:+1234567890" class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-lg transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+      </svg>
+      <span class="text-gray-700">Gọi điện</span>
+    </a>
+
+    <!-- Chatbox -->
+    <button (click)="toggleChatbox()"
+      class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-lg transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+      </svg>
+      <span class="text-gray-700">Chatbox</span>
+    </button>
+
+    <!-- Message -->
+    <a href="sms:+1234567890" class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-lg transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-orange-500" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+      </svg>
+      <span class="text-gray-700">Tin nhắn</span>
+    </a>
+  </div>
+</div>
+
+<!-- Chatbox -->
+<div *ngIf="isChatboxOpen"
+  class="fixed bottom-20 right-6 w-80 bg-white rounded-lg shadow-2xl z-50 flex flex-col max-h-[400px] animate-slide-up">
+  <!-- Header -->
+  <div class="bg-green-500 text-white p-3 rounded-t-lg flex justify-between items-center">
+    <span class="font-semibold">Hỗ trợ trực tuyến</span>
+    <button (click)="toggleChatbox()" class="text-white hover:text-gray-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div class="flex-1 p-4 overflow-y-auto">
+    <div *ngFor="let message of chatMessages" class="mb-3">
+      <div [ngClass]="message.isUser ? 'text-right' : 'text-left'">
+        <span [ngClass]="message.isUser ? 'bg-blue-100' : 'bg-gray-100'" class="inline-block p-2 rounded-lg text-sm">
+          {{ message.text }}
+        </span>
+      </div>
+    </div>
+    <!-- Loading indicator -->
+    <div *ngIf="isLoading" class="text-left">
+      <span class="inline-block p-2 rounded-lg text-sm bg-gray-100">
+        Đang xử lý...
+      </span>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="p-3 border-t">
+    <form (ngSubmit)="sendMessage()" class="flex gap-2">
+      <input [(ngModel)]="chatInput" name="chatInput" type="text" placeholder="Nhập tin nhắn..."
+        class="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+      <button type="submit" class="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path
+            d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Nút lên đầu trang -->
+<button *ngIf="showScrollTop" (click)="scrollToTop()"
+  class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 z-50">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+    stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+  </svg>
+</button>
